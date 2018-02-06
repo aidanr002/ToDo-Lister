@@ -25,26 +25,35 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                 item_number += 1
                 
         if user in 'remove':
-            remove_item = int(input('Enter ID to Remove: ')) #Removes and item and adjusts all of the numbers
-            todo_list.remove(todo_list[remove_item - 1])
-            item_number = 1
-            todo_list_temp = []
-            for item in todo_list:
-                if item_number <= 9:
-                    todo_list_temp.append(str(item_number) + '. ' + item[3:])
-                if item_number >= 10:
-                    todo_list_temp.append(str(item_number) + '. ' + item[4:])
-                item_number += 1
-            todo_list = todo_list_temp
+            remove_item = input('Enter ID to Remove: ') #Removes and item and adjusts all of the numbers
+            if remove_item != '':
+                remove_item = int(remove_item)
+                todo_list.remove(todo_list[remove_item - 1])
+                item_number = 1
+                todo_list_temp = []
+                for item in todo_list:
+                    if item_number <= 9:
+                        todo_list_temp.append(str(item_number) + '. ' + item[3:])
+                    if item_number >= 10:
+                        todo_list_temp.append(str(item_number) + '. ' + item[4:])
+                    item_number += 1
+                todo_list = todo_list_temp
             
         if user in 'exit': #Quits the program
             exit()
             
         if user in 'search': #Search feature. Searches the entire list for the entered keyword. If found it prints the result with a new number based on the order it was in the original list.
             search_query = input('Enter Search Query: ')
+            item_number = 1
+            counter = 0
             for item in todo_list:
+                counter += 1
                 if search_query in item.lower():
-                    print (item)
+                    if counter <= 9:
+                        print(str(item_number) + '. ' + item[3:]) #Changes the number of digits removed from the start based on the value (ten and above need more taken)
+                    if counter >= 10:
+                        print(str(item_number) + '. ' + item[4:])
+                    item_number += 1
 
         if user in 'swap': #Swaps two items based on the inputed number
             code_1 = input('Enter top item: ')
@@ -60,10 +69,12 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                 todo_list[i2], todo_list[i1] = todo_list[i1], todo_list[i2]
             item_number = 1
             todo_list_temp = []
+            counter = 0
             for item in todo_list:
-                if item_number <= 9:
+                counter += 1
+                if counter <= 9:
                     todo_list_temp.append(str(item_number) + '. ' + item[3:]) #Changes the number of digits removed from the start based on the value (ten and above need more taken)
-                if item_number >= 10:
+                if counter >= 10:
                     todo_list_temp.append(str(item_number) + '. ' + item[4:])
                 item_number += 1
             todo_list = todo_list_temp
@@ -81,6 +92,7 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                 print(item[3:], file=n)
             if item_number >= 10:
                 print(item[4:], file=n)
+            item_number += 1
         n.close() #Closes file
         
         user = input('Enter Command: ').lower() #Gets the next command
