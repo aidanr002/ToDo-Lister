@@ -17,13 +17,13 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
         if user in 'list':
             for item in todo_list: #If called, prints the entire list
                 print (item)
-                
+
         if user in 'add':
             new_item = input('New ToDo: ')
             if new_item != '':
                 todo_list.append(str(item_number) + ". " + new_item) #Adds a new item to the list with a number in front
                 item_number += 1
-                
+
         if user in 'remove':
             remove_item = input('Enter ID to Remove: ') #Removes and item and adjusts all of the numbers
             if remove_item != '':
@@ -38,10 +38,10 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                         todo_list_temp.append(str(item_number) + '. ' + item[4:])
                     item_number += 1
                 todo_list = todo_list_temp
-            
+
         if user in 'exit': #Quits the program
             exit()
-            
+
         if user in 'search': #Search feature. Searches the entire list for the entered keyword. If found it prints the result with a new number based on the order it was in the original list.
             search_query = input('Enter Search Query: ')
             item_number = 1
@@ -78,13 +78,32 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                     todo_list_temp.append(str(item_number) + '. ' + item[4:])
                 item_number += 1
             todo_list = todo_list_temp
-            
+
         if user in 'clear': #Creates a clear function with Are You Sure to make sure you don't clear if you didn't want to.
             confirm = input('Are You Sure? ').lower()
             if 'yes' in confirm:
                 todo_list = []
                 print ('Cleared')
-                
+        todo_list_temp = []
+        if user in 'insertnew':
+            insert_where = int(input('Enter Location: '))
+            counter = 0
+            item_number = 1
+            for item in todo_list:
+                counter += 1
+                if counter == insert_where:
+                    new_item = input("Enter Item: ")
+                    if counter <= 9:
+                        todo_list_temp.append(str(item_number) + '. ' + new_item) #Changes the number of digits removed from the start based on the value (ten and above need more taken)
+                    if counter >= 10:
+                        todo_list_temp.append(str(item_number) + '. ' + new_item)
+                if counter <= 9:
+                    todo_list_temp.append(str(item_number) + '. ' + item[3:]) #Changes the number of digits removed from the start based on the value (ten and above need more taken)
+                if counter >= 10:
+                    todo_list_temp.append(str(item_number) + '. ' + item[4:])
+                item_number += 1
+            todo_list = todo_list_temp
+
         n = open('todo.txt', 'w') #Opens the file to write- will over ride all other information in the file.
         item_number = 1
         for item in todo_list:
@@ -94,5 +113,5 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                 print(item[4:], file=n)
             item_number += 1
         n.close() #Closes file
-        
+
         user = input('Enter Command: ').lower() #Gets the next command
