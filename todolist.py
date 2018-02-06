@@ -55,29 +55,8 @@ with open('todo.txt') as f: #Opens the files with a 'with' statement: closes whe
                         print(str(item_number) + '. ' + item[4:])
                     item_number += 1
 
-        if user == 'swap': #Swaps two items based on the inputed number
-            code_1 = input('Enter top item: ')
-            code_2 = input('Enter bottom item: ')
-            for item in todo_list:
-                if code_1 in item:
-                    item_1 = item
-                if code_2 in item:
-                    item_2 = item
-            i1 = todo_list.index(item_1)
-            i2 = todo_list.index(item_2)
-            if item_1 != False and item_2 != False:
-                todo_list[i2], todo_list[i1] = todo_list[i1], todo_list[i2]
-            item_number = 1
-            todo_list_temp = []
-            counter = 0
-            for item in todo_list:
-                counter += 1
-                if counter <= 9:
-                    todo_list_temp.append(str(item_number) + '. ' + item[3:]) #Changes the number of digits removed from the start based on the value (ten and above need more taken)
-                if counter >= 10:
-                    todo_list_temp.append(str(item_number) + '. ' + item[4:])
-                item_number += 1
-            todo_list = todo_list_temp
+        if user == 'commands':
+            print ('These are the commands: \n list, search, move, insertnew, exit, remove, add, clear')
 
         if user == 'move':
             counter = 0
